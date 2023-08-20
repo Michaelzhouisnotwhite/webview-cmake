@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(webview_test)
+project(webview)
 
 # set(CMAKE_CXX_STANDARD 17)
 include(FetchContent)
@@ -7,23 +7,23 @@ include(FetchContent)
 message("--- fetching webview repository...")
 
 FetchContent_Declare(
-    webview
+    webviewcc
     GIT_REPOSITORY https://github.com/webview/webview.git
     GIT_TAG master
 )
 
-FetchContent_GetProperties(webview)
+FetchContent_GetProperties(webviewcc)
 message("--- fetch webview repository completed")
 
 if(NOT webview_POPULATED)
     # Library does not have a CMake build script
     # We have to do it ourselves
-    FetchContent_Populate(webview)
-    add_library(webview INTERFACE ${webview_SOURCE_DIR}/webview.cc)
+    FetchContent_Populate(webviewcc)
+    add_library(webview INTERFACE ${webviewcc_SOURCE_DIR}/webview.cc)
 
     # target_sources(webview INTERFACE ${webview_SOURCE_DIR}/webview.h)
-    target_include_directories(webview INTERFACE ${webview_SOURCE_DIR})
-
+    target_include_directories(webview INTERFACE ${webviewcc_SOURCE_DIR})
+    message(DEBUG "-------${webviewcc_SOURCE_DIR}")
     # Set compile options
     # See: https://github.com/webview/webview/blob/master/script/build.sh
     if(WIN32)
